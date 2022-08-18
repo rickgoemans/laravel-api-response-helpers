@@ -17,7 +17,6 @@ class ApiResponse
         return static::default([
             'success' => true,
             'data' => $data,
-            'code' => $code,
         ], $code);
     }
 
@@ -27,7 +26,6 @@ class ApiResponse
             'success' => false,
             'message' => $message,
             'errors' => $errors,
-            'code' => $code,
         ], $code);
     }
 
@@ -35,7 +33,7 @@ class ApiResponse
     {
         return static::default([
             'success' => false,
-            'code' => $code,
+            'message' => 'Unauthorized',
         ], $code);
     }
 
@@ -43,7 +41,7 @@ class ApiResponse
     {
         return static::default([
             'success' => false,
-            'code' => $code,
+            'message' => 'Forbidden',
         ], $code);
     }
 }

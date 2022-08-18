@@ -20,8 +20,38 @@ composer require rickgoemans/laravel-api-response-helpers
 ## Usage
 
 ```php
-$laravelApiResponseHelpers = new Rickgoemans\LaravelApiResponseHelpers();
-echo $laravelApiResponseHelpers->echoPhrase('Hello, Rickgoemans!');
+use Rickgoemans\LaravelApiResponseHelpers\ApiResponse;
+
+class ExampleController extends Controller {
+    public function default(): JsonResponse {
+        return ApiResponse::default([
+            'message' => 'This is an example',
+        ], 200);
+    }
+    
+    public function success(): JsonResponse {
+        return ApiResponse::success([
+            'user_id' => 1,
+            'name' => 'Rick Goemans',
+        ], 200);
+    }
+    
+    public function error(): JsonResponse {
+        return ApiResponse::error([
+            'name' => [
+                'required',
+            ],
+        ], 'Invalid data', 422);
+    }
+    
+    public function unauthorized(): JsonResponse {
+        return ApiResponse::unauthorized(401);
+    }
+    
+    public function forbidden(): JsonResponse {
+        return ApiResponse::forbidden(403);
+    }
+}
 ```
 
 ## Testing
