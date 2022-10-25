@@ -1,4 +1,3 @@
-
 [<img src="https://github-ads.s3.eu-central-1.amazonaws.com/support-ukraine.svg?t=1" />](https://supportukrainenow.org)
 
 # A Laravel helper to create uniform API responses
@@ -17,6 +16,7 @@ You can install the package via composer:
 ```bash
 composer require rickgoemans/laravel-api-response-helpers
 ```
+
 ## Usage
 
 ```php
@@ -33,7 +33,7 @@ class ExampleController extends Controller {
         return ApiResponse::success([
             'user_id' => 1,
             'name' => 'Rick Goemans',
-        ], 200);
+        ], 'THis is an example', 200);
     }
     
     public function error(): JsonResponse {
