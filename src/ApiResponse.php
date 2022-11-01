@@ -16,8 +16,8 @@ class ApiResponse
     {
         return static::default([
             'success' => true,
-            'data' => $data,
             'message' => $message,
+            'data' => $data,
         ], $code);
     }
 

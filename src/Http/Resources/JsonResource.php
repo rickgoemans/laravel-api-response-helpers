@@ -24,7 +24,7 @@ class JsonResource extends BaseJsonResource
             ];
         }
 
-        $traits = class_uses($modelClass);
+        $traits = class_uses_recursive($modelClass);
         if (in_array(SoftDeletes::class, array_keys($traits))) {
             $data = [
                 ...$data,
