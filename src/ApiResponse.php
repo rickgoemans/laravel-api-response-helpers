@@ -12,21 +12,21 @@ class ApiResponse
             ->json($data, $code);
     }
 
-    public static function success(mixed $data, string $message = 'success', int $code = 200): JsonResponse
+    public static function success(string $message = 'success', mixed $data = null, int $code = 200): JsonResponse
     {
         return static::default([
             'success' => true,
             'message' => $message,
-            'data' => $data,
+            'data'    => $data,
         ], $code);
     }
 
-    public static function error(mixed $errors, ?string $message = null, int $code = 422): JsonResponse
+    public static function error(?string $message = null, mixed $errors = null, int $code = 422): JsonResponse
     {
         return static::default([
             'success' => false,
             'message' => $message,
-            'errors' => $errors,
+            'errors'  => $errors,
         ], $code);
     }
 
