@@ -30,18 +30,18 @@ class ExampleController extends Controller {
     }
     
     public function success(): JsonResponse {
-        return ApiResponse::success([
+        return ApiResponse::success('Ths is an example', [
             'user_id' => 1,
             'name' => 'Rick Goemans',
-        ], 'THis is an example', 200);
+        ], 200);
     }
     
     public function error(): JsonResponse {
-        return ApiResponse::error([
+        return ApiResponse::error('Invalid data', [
             'name' => [
                 'required',
             ],
-        ], 'Invalid data', 422);
+        ], 422);
     }
     
     public function unauthorized(): JsonResponse {
