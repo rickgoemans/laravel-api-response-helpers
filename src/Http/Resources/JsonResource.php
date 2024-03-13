@@ -19,8 +19,8 @@ class JsonResource extends BaseJsonResource
             $data = [
                 ...$data,
 
-                'created_at' => $this->resource->{$this->resource->getCreatedAtColumn()}->toIso8601String(),
-                'updated_at' => $this->resource->{$this->resource->getUpdatedAtColumn()}->toIso8601String(),
+                $this->resource->getCreatedAtColumn() => $this->resource->{$this->resource->getCreatedAtColumn()}->toIso8601String(),
+                $this->resource->getUpdatedAtColumn() => $this->resource->{$this->resource->getUpdatedAtColumn()}->toIso8601String(),
             ];
         }
 
@@ -30,7 +30,7 @@ class JsonResource extends BaseJsonResource
                 ...$data,
 
                 // @phpstan-ignore-next-line
-                'deleted_at' => $this->resource->{$this->resource->getDeletedAtColumn()}?->toIso8601String(),
+                $this->resource->getDeletedAtColumn() => $this->resource->{$this->resource->getDeletedAtColumn()}?->toIso8601String(),
             ];
         }
 
