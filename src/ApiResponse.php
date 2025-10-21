@@ -6,10 +6,26 @@ use Illuminate\Http\JsonResponse;
 
 class ApiResponse
 {
-    public static function default(mixed $data, int $code = 200): JsonResponse
+    public static function error(?string $message = null, mixed $errors = null, int $code = 422): JsonResponse
     {
-        return response()
-            ->json($data, $code);
+        return static::default([
+            'success' => false,
+            'message' => $message,
+            'errors' => $errors,
+        ], $code);
+    }
+
+    public static function deleted(?string $message = null): JsonResponse
+    {
+        return static::success($message ?? 'Deleted');
+    }
+
+    public static function forbidden(?string $message = null): JsonResponse
+    {
+        return static::default([
+            'success' => false,
+            'message' => $message ?? 'Forbidden',
+        ], 403);
     }
 
     public static function success(string $message = 'success', mixed $data = null, int $code = 200): JsonResponse
@@ -21,28 +37,38 @@ class ApiResponse
         ], $code);
     }
 
-    public static function error(?string $message = null, mixed $errors = null, int $code = 422): JsonResponse
+    public static function unauthorized(?string $message = null): JsonResponse
     {
         return static::default([
             'success' => false,
-            'message' => $message,
-            'errors' => $errors,
-        ], $code);
+            'message' => $message ?? 'Unauthorized',
+        ], 401);
     }
 
-    public static function unauthorized(int $code = 401): JsonResponse
+    protected static function default(mixed $data, int $code = 200): JsonResponse
     {
-        return static::default([
-            'success' => false,
-            'message' => 'Unauthorized',
-        ], $code);
+        $data = match (true) {
+            is_null($data) => '',
+            is_array($data) => static::filterNullValuesFromArray($data),
+            default => $data,
+        };
+
+        return response()
+            ->json($data, $code);
     }
 
-    public static function forbidden(int $code = 403): JsonResponse
+    protected static function filterNullValuesFromArray(array $data): array
     {
-        return static::default([
-            'success' => false,
-            'message' => 'Forbidden',
-        ], $code);
+        foreach ($data as $key => $value) {
+            if (is_array($value)) {
+                $data[$key] = static::filterNullValuesFromArray($value);
+            }
+
+            if (is_null($value)) {
+                unset($data[$key]);
+            }
+        }
+
+        return $data;
     }
 }
