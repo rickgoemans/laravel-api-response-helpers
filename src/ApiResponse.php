@@ -45,7 +45,7 @@ class ApiResponse
         ], 401);
     }
 
-    protected static function default(mixed $data, int $code = 200): JsonResponse
+    public static function default(mixed $data, int $code = 200): JsonResponse
     {
         $data = match (true) {
             is_null($data) => '',
